@@ -79,7 +79,8 @@ frontEndEcho.desktopAccelHandler(frontEndEcho.socket, calculateRunningAverage);
 
 function addData() {
   myLiveChart.removeData();
-  myLiveChart.addData([xAvg, yAvg, zAvg], ++latestLabel);
+  // myLiveChart.addData([xAvg, yAvg, zAvg], ++latestLabel);
+  myLiveChart.addData([Math.random() * 15, Math.random() * -15, Math.random() * 15], ++latestLabel);  
 }
 
 setInterval(addData, 75);
