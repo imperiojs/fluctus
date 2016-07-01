@@ -82,4 +82,4 @@ function addData() {
   myLiveChart.addData([xAvg, yAvg, zAvg], ++latestLabel);
 }
 
-setInterval(addData, 100);
+setInterval(addData, 75);
