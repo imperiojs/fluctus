@@ -4,16 +4,26 @@ body {
     text-align: center;
 }
 
-.class1 {
-    color: white;
-    background-color:black;
-}
-
 .class2 {
-    color: black;
-    background-color:white;
+    background-color:black;
+    margin:0;
 }
 
+h1 {
+    margin:0; 
+    color: rgba(44, 53, 172, 1)   
+}
+
+#nonceContainer {
+    color:rgba(88, 36, 169, 1);
+    font-size:75px;
+    margin-bottom:20px;
+}
+
+canvas {
+    border:solid 5px rgba(249, 226, 34, 1);
+    background-color: black;
+}
 
 table td {
     border: 1px solid white;
