@@ -1,59 +1,47 @@
-// 'use strict';
-const bodyElement = document.querySelector('body');
-const h6Element = document.querySelector('h6');
-const accelDiv = document.getElementById('accel');
-const gyroDiv = document.getElementById('gyro');
-const aX = document.getElementById('acceleration-x');
-const aY = document.getElementById('acceleration-y');
-const aZ = document.getElementById('acceleration-z');
-const alpha = document.getElementById('alpha');
-const beta = document.getElementById('beta');
-const gamma = document.getElementById('gamma');
-const room = frontEndEcho.room;
-const nonce = frontEndEcho.nonce;
-
 // Add nonce code to screen for mobile users to enter
-document.getElementById('nonceContainer').innerHTML = `Mobile code: ${nonce}`;
+document.getElementById('nonceContainer').innerHTML = `Mobile code: <span>${frontEndEcho.nonce}</span>`;
 
 // Use roomId from cookies to create a room
 frontEndEcho.desktopRoomSetup(frontEndEcho.socket, frontEndEcho.room);
 
-let canvas = document.getElementById('accel-chart'),
-  ctx = canvas.getContext('2d'),
-  startingData = {
-    labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    datasets: [
-      {
-        fillColor: 'rgba(220,220,220,0)',
-        strokeColor: 'rgba(88, 36, 169, 1)',
-        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      },
-      {
-        fillColor: "rgba(151,187,205,0)",
-        strokeColor: "rgba(44, 53, 172, 1)",
-        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      },
-      {
-        fillColor: "rgba(151,187,205,0)",
-        strokeColor: "rgba(249, 226, 34, 1)",
-        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      }
-    ]
-  },
-  latestLabel = startingData.labels[9];
+// Grab canvas element and create starting data and line styles
+const canvas = document.getElementById('accel-chart');
+const ctx = canvas.getContext('2d');
+const startingData = {
+  labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  datasets: [
+    {
+      fillColor: 'rgba(220,220,220,0)',
+      strokeColor: 'rgba(88, 36, 169, 1)',
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    },
+    {
+      fillColor: "rgba(151,187,205,0)",
+      strokeColor: "rgba(44, 53, 172, 1)",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    },
+    {
+      fillColor: "rgba(151,187,205,0)",
+      strokeColor: "rgba(249, 226, 34, 1)",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    },
+  ],
+};
+let latestLabel = startingData.labels[9];
 
-// Reduce the animation steps for demo clarity.
-let myLiveChart = new Chart(ctx).Line(startingData, {
+// Create line chart and set options
+const myLiveChart = new Chart(ctx).Line(startingData, {
   animationSteps: 1,
   scaleGridLineColor: 'rgba(255, 230, 161, 1)',
-  scaleOverride : true,
-  scaleSteps : 8,
-  scaleStepWidth : 5,
-  scaleStartValue : -20,
-  datasetStrokeWidth : 10,
+  scaleOverride: true,
+  scaleSteps: 8,
+  scaleStepWidth: 5,
+  scaleStartValue: -20,
+  datasetStrokeWidth: 8,
   scalefontSize: 50,
 });
 
+// Initialize running x, y, and z average accelerations and arrays
 let xAvg = 0;
 let yAvg = 0;
 let zAvg = 0;
@@ -61,26 +49,27 @@ let xDataArray = [0, 1, 2, 3, 4];
 let yDataArray = [0, 1, 2, 3, 4];
 let zDataArray = [0, 1, 2, 3, 4];
 
+// Running average function stacks most recent acceleration points and calcs avg
 function calculateRunningAverage(accelerationDataObject) {
   xDataArray.shift();
   xDataArray.push(accelerationDataObject.x);
-  xAvg = xDataArray.reduce((a, b) => {return a + b}) / 5;
+  xAvg = xDataArray.reduce((a, b) => {return a + b; }) / 5;
   yDataArray.shift();
   yDataArray.push(accelerationDataObject.y);
-  yAvg = yDataArray.reduce((a, b) => {return a + b}) / 5;
+  yAvg = yDataArray.reduce((a, b) => {return a + b; }) / 5;
   zDataArray.shift();
   zDataArray.push(accelerationDataObject.z);
-  zAvg = zDataArray.reduce((a, b) => {return a + b}) / 5;
+  zAvg = zDataArray.reduce((a, b) => {return a + b; }) / 5;
 }
 
-// frontEndEcho.desktopTapHandler(frontEndEcho.socket, changeBodyClass);
+// Instantiate acceleration handler
 frontEndEcho.desktopAccelHandler(frontEndEcho.socket, calculateRunningAverage);
-// frontEndEcho.desktopGyroHandler(frontEndEcho.socket, updateGyroscopeData);
 
+// Removes and adds one data point to each dataset in the chart
 function addData() {
   myLiveChart.removeData();
-  // myLiveChart.addData([xAvg, yAvg, zAvg], ++latestLabel);
-  myLiveChart.addData([Math.random() * 15, Math.random() * -15, Math.random() * 15], ++latestLabel);  
+  myLiveChart.addData([xAvg, yAvg, zAvg], ++latestLabel);
 }
 
-setInterval(addData, 75);
+// Set interval to re-render chart
+setInterval(addData, 60);
