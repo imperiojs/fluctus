@@ -2,13 +2,13 @@ var h1Element = document.querySelector('h1');
 var h2Element = document.querySelector('h2');
 var h3Element = document.querySelector('h3');
 
-frontEndEcho.mobileRoomSetup(frontEndEcho.socket, frontEndEcho.room, showRoomName);
+imperio.mobileRoomSetup(imperio.socket, imperio.room, showRoomName);
 
 // handle accel data using our library
-frontEndEcho.mobileAccelShare(frontEndEcho.socket, frontEndEcho.room, printAccelerationData);
+imperio.mobileAccelShare(imperio.socket, imperio.room, printAccelerationData);
 
 // handle gyro using our library
-frontEndEcho.mobileGyroShare(frontEndEcho.socket, frontEndEcho.room, printGyroscopeData);
+imperio.mobileGyroShare(imperio.socket, imperio.room, printGyroscopeData);
 
 function printAccelerationData(accObj) {
   h2Element.innerHTML = `Ax is ${accObj.x}, Ay is ${accObj.y}, Az is ${accObj.z}`;
