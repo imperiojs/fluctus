@@ -7,6 +7,7 @@ const imperio = require('imperio')(server);
 const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(`${__dirname}/../client`)));
+app.use(express.static(path.join(`${__dirname}/../node_modules/imperio`)));
 app.set('view engine', 'ejs');
 app.use(imperio.init());
 
