@@ -6,17 +6,16 @@
     <link rel="stylesheet" href="mobile.css">
   </head>
   <body>
-    <div id="not-connected">
-      <h1>Enter Code Below</h1></br>
-      <form class="" action="/" method="post">
-        <input type="text" name="codeCheck" placeholder = "Nonce Code Goes Here">
-        <input type = "submit" value="Submit">
-        <% if (error){%>
-          <div>Error:<div>
-          <div> <%= error %> <div>
-        <% } %>
-      </form>
-    </div>
+    <h1>fluctus</h1>
+    <h2>enter mobile code:</h2>
+    <form class="" action="/" method="post">
+      <input type="text" name="codeCheck" placeholder ="mobile code" id="mobile-code"/>
+      <input type = "submit" value="submit" id="button"/>
+      <% if (error){%>
+        <div>Error:<div>
+        <div> <%= error %> <div>
+      <% } %>
+    </form>
   </body>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script src="./lib/cookies-js/dist/cookies.js"></script> 

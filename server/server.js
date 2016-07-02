@@ -4,6 +4,7 @@ const app = express();
 const server = require('http').Server(app); // eslint-disable-line
 const path = require('path');
 const imperio = require('imperio')(server);
+const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(`${__dirname}/../client`)));
 app.set('view engine', 'ejs');
@@ -53,6 +54,6 @@ app.get('*', (req, res) => {
  * --    Server    --
  * ------------------ */
 
-server.listen(3000, () => {
-  console.log('Listening on port 3000');
+server.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
