@@ -31,6 +31,7 @@
     "ejs": "^2.4.2",
     "express": "^4.14.0",
     "express-useragent": "^0.2.4",
+    "imperio": "0.0.5",
     "jsonwebtoken": "^7.0.1",
     "node-uuid": "^1.4.7",
     "socket.io": "^1.4.6"

@@ -3,11 +3,11 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app); // eslint-disable-line
 const path = require('path');
-const echo = require('./../library/server/mainServer.js')(server);
+const imperio = require('imperio')(server);
 
 app.use(express.static(path.join(`${__dirname}/../client`)));
 app.set('view engine', 'ejs');
-app.use(echo.init());
+app.use(imperio.init());
 
 /* ------------------
  * --    Routes    --
@@ -30,8 +30,8 @@ app.post('/',
   (req, res) => {
     if (req.useragent && req.useragent.isMobile) {
       // TODO Validate nonce match, if it doesn't, serve rootmobile
-      console.log(req.echo);
-      if (req.echo.connected) {
+      console.log(req.imperio);
+      if (req.imperio.connected) {
         res.render(`${__dirname}/../client/tapmobile`, { error: null });
       } else {
         res.render(`${__dirname}/../client/rootmobile`, { error: null });
