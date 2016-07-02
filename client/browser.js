@@ -1,8 +1,8 @@
 // Add nonce code to screen for mobile users to enter
-document.getElementById('nonceContainer').innerHTML = `Mobile code: <span>${frontEndEcho.nonce}</span>`;
+document.getElementById('nonceContainer').innerHTML = `Mobile code: <span>${imperio.nonce}</span>`;
 
 // Use roomId from cookies to create a room
-frontEndEcho.desktopRoomSetup(frontEndEcho.socket, frontEndEcho.room);
+imperio.desktopRoomSetup(imperio.socket, imperio.room);
 
 // Grab canvas element and create starting data and line styles
 const canvas = document.getElementById('accel-chart');
@@ -63,7 +63,7 @@ function calculateRunningAverage(accelerationDataObject) {
 }
 
 // Instantiate acceleration handler
-frontEndEcho.desktopAccelHandler(frontEndEcho.socket, calculateRunningAverage);
+imperio.desktopAccelHandler(imperio.socket, calculateRunningAverage);
 
 // Removes and adds one data point to each dataset in the chart
 function addData() {
