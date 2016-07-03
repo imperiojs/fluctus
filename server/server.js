@@ -31,7 +31,7 @@ app.post('/',
     if (req.useragent && req.useragent.isMobile) {
       // TODO Validate nonce match, if it doesn't, serve rootmobile
       console.log(req.echo);
-      if (req.echo.connected) {
+      if (req.imperio.connected) {
         res.render(`${__dirname}/../client/tapmobile`, { error: null });
       } else {
         res.render(`${__dirname}/../client/rootmobile`, { error: null });
