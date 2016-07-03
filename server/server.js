@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app); // eslint-disable-line
 const path = require('path');
-const echo = require('./../library/server/mainServer.js')(server);
+const echo = require('./../../imperioDev/index.js')(server);
 
 app.use(express.static(path.join(`${__dirname}/../client`)));
 app.set('view engine', 'ejs');
