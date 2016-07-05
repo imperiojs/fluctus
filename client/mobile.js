@@ -1,24 +1,14 @@
-var h1Element = document.querySelector('h1');
-var h2Element = document.querySelector('h2');
-var h3Element = document.querySelector('h3');
+var xAccelBox = document.getElementById('x-accel');
+var yAccelBox = document.getElementById('y-accel');
+var zAccelBox = document.getElementById('z-accel');
 
-frontEndEcho.mobileRoomSetup(frontEndEcho.socket, frontEndEcho.room, showRoomName);
+imperio.mobileRoomSetup(imperio.socket, imperio.room);
 
 // handle accel data using our library
-frontEndEcho.mobileAccelShare(frontEndEcho.socket, frontEndEcho.room, printAccelerationData);
-
-// handle gyro using our library
-frontEndEcho.mobileGyroShare(frontEndEcho.socket, frontEndEcho.room, printGyroscopeData);
+imperio.mobileAccelShare(imperio.socket, imperio.room, printAccelerationData);
 
 function printAccelerationData(accObj) {
-  h2Element.innerHTML = `Ax is ${accObj.x}, Ay is ${accObj.y}, Az is ${accObj.z}`;
-}
-
-function printGyroscopeData(gyroObj) {
-  h3Element.innerHTML = `alpha is ${gyroObj.alpha},
-    beta is ${gyroObj.beta}, gamma is ${gyroObj.gamma}`;
-}
-
-function showRoomName() {
-  h1Element.innerHTML = `inside socket connection, room is good`;
+  xAccelBox.innerHTML = `${accObj.x}`;
+  yAccelBox.innerHTML = `${accObj.y}`;
+  zAccelBox.innerHTML = `${accObj.z}`;  
 }
