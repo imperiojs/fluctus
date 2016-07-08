@@ -1,22 +1,31 @@
 body {
-    font-size: 100px;
-    font-weight: bold;
-    text-align: center;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  text-align: center;
+  background-color:rgba(0, 0, 0, 1);
+  margin:0;
 }
 
-.class1 {
-    color: white;
-    background-color:black;
+h1 {
+  margin:0; 
+  color: rgba(44, 53, 172, 1);
+  font-size:4em;
+  font-weight:100;
 }
 
-.class2 {
-    color: black;
-    background-color:white;
+#nonceContainer {
+  color:rgba(88, 36, 169, 1);
+  font-size:1.25em;
 }
 
+#nonceContainer span {
+  color: rgba(249, 226, 34, 1);
+}
 
-table td {
-    border: 1px solid white;
-    width: 400px;
-    font-size: 0.75em;
+canvas {
+  border:solid 5px rgba(249, 226, 34, 1);
+  background-color: rgba(0, 0, 0, 1);
+  margin-top:1.5em;
+  height:45em;
+  width:75em;
+  border-radius:1em;
 }

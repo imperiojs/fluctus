@@ -2,21 +2,14 @@
 const express = require('express');
 const app = express();
 const server = require('http').Server(app); // eslint-disable-line
-const io = require('socket.io')(server);
 const path = require('path');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const useragent = require('express-useragent');
-
-const activeConnectRequests = {};
-const desktopController = require('./desktopController.js');
-const mobileController = require('./mobileController.js');
+const imperio = require('imperio')(server);
+const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(`${__dirname}/../client`)));
-app.use(useragent.express());
-app.use(bodyParser.urlencoded( { extended: true } ));
-app.use(cookieParser());
+app.use(express.static(path.join(`${__dirname}/../node_modules/imperio`)));
 app.set('view engine', 'ejs');
+app.use(imperio.init());
 
 /* ------------------
  * --    Routes    --
@@ -24,8 +17,6 @@ app.set('view engine', 'ejs');
 
 // App will serve up different pages for client & desktop
 app.get('/',
-  desktopController.handleRequest(activeConnectRequests),
-  mobileController.handleRequest(activeConnectRequests),
   (req, res) => {
     if (req.useragent && req.useragent.isDesktop) {
       res.sendFile(path.join(`${__dirname}/../client/browser.html`));
@@ -38,11 +29,15 @@ app.get('/',
   }
 );
 app.post('/',
-  mobileController.handlePost(activeConnectRequests),
   (req, res) => {
     if (req.useragent && req.useragent.isMobile) {
       // TODO Validate nonce match, if it doesn't, serve rootmobile
-      res.render(`${__dirname}/../client/tapmobile`, { error: null });
+      console.log(req.imperio);
+      if (req.imperio.connected) {
+        res.render(`${__dirname}/../client/tapmobile`, { error: null });
+      } else {
+        res.render(`${__dirname}/../client/rootmobile`, { error: null });
+      }
     } else {
       res.status(404)
          .render(`${__dirname}/../client/browser.html`, { error: 'NO POST' });
@@ -57,38 +52,9 @@ app.get('*', (req, res) => {
 });
 
 /* ------------------
- * --   Sockets    --
- * ------------------ */
-
-io.on('connection', socket => {
-  console.log('A socket has a connection');
-  socket.on('createRoom', room => {
-    console.log(`Joined ${room}`);
-    // decrypt token?
-    socket.join(room);
-  });
-  socket.on('tap', room => {
-    console.log('Tap from mobile!');
-    io.sockets.in(room).emit('tap');
-  });
-  socket.on('disconnect', () => {
-    console.log('A user has disconnected');
-    io.emit('user disconnected');
-  });
-  socket.on('acceleration', (room, accObject) => {
-    console.log(accObject);
-    io.sockets.in(room).emit('acceleration', accObject);
-  });
-  socket.on('gyroscope', (room, gyroObject) => {
-    console.log(gyroObject);
-    io.sockets.in(room).emit('gyroscope', gyroObject);
-  });
-});
-
-/* ------------------
  * --    Server    --
  * ------------------ */
 
-server.listen(3000, () => {
-  console.log('Listening on port 3000');
+server.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });

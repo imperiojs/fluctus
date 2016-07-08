@@ -2,19 +2,32 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name=viewport content='width=200'>
     <title>Mobile Testing Page</title>
     <link rel="stylesheet" href="mobile.css">
   </head>
   <body>
-    <button type="button" name="button" onclick="emitTap()">Tap Here</button>
-    <div></div>
-    <h1></h1>
-    <div></div>
-    <h2>hello</h2>
-    <div></div>
-    <h3></h3>
+    <h1>fluctus</h1>
+    <table cellspacing="0">
+      <tr>
+        <td>vector</td>
+        <td>m/s^2</td>
+      </tr>
+      <tr class="x-row">
+        <td>x</td>
+        <td id="x-accel"></td>
+      </tr>
+      <tr class="y-row">
+        <td>y</td>
+        <td id="y-accel"></td>
+      </tr>
+      <tr class="z-row">
+        <td>z</td>
+        <td id="z-accel"></td>
+      </tr>
+    </table>
   </body>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  <script src="./lib/cookies-js/dist/cookies.js"></script>
+  <script src='./dist/imperio.min.js'></script>
   <script src="mobile.js"></script>
 </html>
