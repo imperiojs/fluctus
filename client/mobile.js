@@ -10,5 +10,5 @@ imperio.mobileAccelShare(imperio.socket, imperio.room, printAccelerationData);
 function printAccelerationData(accObj) {
   xAccelBox.innerHTML = `${accObj.x}`;
   yAccelBox.innerHTML = `${accObj.y}`;
-  zAccelBox.innerHTML = `${accObj.z}`;  
+  zAccelBox.innerHTML = `${accObj.z}`;
 }
